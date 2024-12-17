@@ -1,2 +1,4 @@
 ^taxonomy\.tools\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
+^LICENSE\.md$
