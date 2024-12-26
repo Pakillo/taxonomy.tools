@@ -1,13 +1,24 @@
 Package: taxonomy.tools
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Tools to Work with Taxonomic Data
+Version: 0.0.1
 Authors@R: 
     person("Francisco", "Rodriguez-Sanchez", , "f.rodriguez.sanc@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7981-1599"))
-Description: What the package does (one paragraph).
+Description: Tools to Work with Taxonomic Data.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-URL: https://github.com/Pakillo/taxonomy.tools
+URL: https://github.com/Pakillo/taxonomy.tools, https://pakillo.github.io/taxonomy.tools/
 BugReports: https://github.com/Pakillo/taxonomy.tools/issues
+Imports: 
+    dplyr,
+    future,
+    future.apply,
+    rWCVP,
+    tidyr,
+    utils
+Suggests:
+    rWCVPdata,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
