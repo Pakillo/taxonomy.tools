@@ -120,7 +120,7 @@ resolve_multi <- function(df) {
 
   # If one or more matches have the same author string, we keep them.
   if ("wcvp_author_edit_distance" %in% names(df)) {
-    out <- df |>
+    out <- out |>
       dplyr::filter(wcvp_author_edit_distance == 0 | !sum(wcvp_author_edit_distance == 0, na.rm = TRUE))
     if (nrow(out) == 1) return(out)
   }
