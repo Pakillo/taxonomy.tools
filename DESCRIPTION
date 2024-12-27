@@ -22,5 +22,6 @@ Suggests:
     rWCVPdata,
     testthat (>= 3.0.0)
 Remotes:
-    matildabrown/rWCVPdata
+    matildabrown/rWCVPdata,
+    matildabrown/rWCVP
 Config/testthat/edition: 3
