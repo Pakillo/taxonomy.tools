@@ -15,7 +15,7 @@ Imports:
     dplyr,
     future,
     future.apply,
-    rWCVP,
+    rWCVP (>= 1.2.6),
     tidyr,
     utils
 Suggests:
