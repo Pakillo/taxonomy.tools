@@ -114,31 +114,33 @@ wcvp_resolve_multiple_matches <- function(df = NULL, name_col = NULL) {
 
 resolve_multi <- function(df) {
 
-  out <- df |>
+  df.col <- df |>
     dplyr::mutate(resolved_match_type = match_type)
-  if (nrow(out) == 1) return(out)
+  if (nrow(df.col) == 1) return(df.col)
+
+  valid_matches <- dplyr::filter(df.col, !is.na(match_similarity))
+  if (nrow(valid_matches) == 0) return(head(df.col, 1))
 
   # If one or more matches have the same author string, we keep them.
   if ("wcvp_author_edit_distance" %in% names(df)) {
-    out <- out |>
+    valid_matches <- valid_matches |>
       dplyr::filter(wcvp_author_edit_distance == 0 | !sum(wcvp_author_edit_distance == 0, na.rm = TRUE))
-    if (nrow(out) == 1) return(out)
+    if (nrow(valid_matches) == 1) return(valid_matches)
   }
 
-
   # If one (and only one) of the matches is Accepted, we keep that one.
-  out <- out |>
+  accepted_names <- valid_matches |>
     dplyr::filter(wcvp_status == "Accepted" | !sum(wcvp_status == "Accepted"))
-  if (nrow(out) == 1) return(out)
+  if (nrow(accepted_names) == 1) return(accepted_names)
 
   # If one (and only one) of the matches is a Synonym (as opposed to Invalid, Illegitimate, etc), we keep that one.
   synonym_codes <- c("Synonym", "Orthographic", "Artificial Hybrid", "Unplaced")
-  out <- out |>
+  synonyms <- accepted_names |>
     dplyr::filter(wcvp_status %in% synonym_codes | !sum(wcvp_status %in% synonym_codes))
-  if (nrow(out) == 1) return(out)
+  if (nrow(synonyms) == 1) return(synonyms)
 
-  n_matches <- length(unique(out$wcvp_accepted_id)) / nrow(out)
-  final <- utils::head(out, 1)
+  n_matches <- length(unique(synonyms$wcvp_accepted_id)) / nrow(synonyms)
+  final <- utils::head(synonyms, 1)
 
   if (n_matches != 1) {
     final <- final |>
